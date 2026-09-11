@@ -7,14 +7,14 @@ struct HistoryView: View {
 
     private var overallAveragePutts: Double {
         guard !rounds.isEmpty else { return 0 }
-        let total = rounds.reduce(0) { $0 + $1.totalPutts }
+        let total = rounds.map(\.totalPutts).reduce(0, +)
         return Double(total) / Double(rounds.count)
     }
 
     private var overallAveragePerHole: Double {
         let allHoles = rounds.flatMap { $0.holes }
         guard !allHoles.isEmpty else { return 0 }
-        let total = allHoles.reduce(0) { $0 + $1.putts }
+        let total = allHoles.map(\.totalPutts).reduce(0, +)
         return Double(total) / Double(allHoles.count)
     }
 

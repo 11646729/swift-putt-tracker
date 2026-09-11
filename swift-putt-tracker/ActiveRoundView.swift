@@ -23,45 +23,45 @@ struct ActiveRoundView: View {
     }
 
     var body: some View {
-        VStack(spacing: 32) {
+        ScrollView {
+        VStack(spacing: 20) {
             Text("Hole \(currentHole.holeNumber) of \(round.numberOfHoles)")
                 .font(.headline)
                 .foregroundStyle(.secondary)
+                .padding(.top, 8)
 
             ProgressView(value: Double(currentHoleIndex + 1), total: Double(round.numberOfHoles))
                 .padding(.horizontal)
 
-            Spacer()
+            Text("\(currentHole.totalPutts)")
+                .font(.system(size: 64, weight: .bold, design: .rounded))
+                .contentTransition(.numericText())
+            Text("putts this hole")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .padding(.bottom, 4)
 
-            VStack(spacing: 12) {
-                Text("Putts")
-                    .font(.title3)
-                    .foregroundStyle(.secondary)
-
-                Text("\(currentHole.putts)")
-                    .font(.system(size: 96, weight: .bold, design: .rounded))
-                    .contentTransition(.numericText())
-
-                HStack(spacing: 40) {
-                    Button {
-                        if currentHole.putts > 0 { currentHole.putts -= 1 }
-                    } label: {
-                        Image(systemName: "minus.circle.fill")
-                            .font(.system(size: 48))
-                    }
-                    .disabled(currentHole.putts == 0)
-
-                    Button {
-                        currentHole.putts += 1
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 48))
-                    }
+            VStack(spacing: 14) {
+                ForEach(PuttBin.allCases) { bin in
+                    PuttBinRow(
+                        bin: bin,
+                        count: currentHole.count(for: bin),
+                        onIncrement: { currentHole.increment(bin) },
+                        onDecrement: { currentHole.decrement(bin) }
+                    )
                 }
-                .foregroundStyle(.green)
-            }
 
-            Spacer()
+                Toggle("Used putter off the green", isOn: Binding(
+                    get: { currentHole.usedPutterOffGreen },
+                    set: { currentHole.usedPutterOffGreen = $0 }
+                ))
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+            }
+            .padding(.horizontal)
+
+            Spacer(minLength: 24)
 
             Text("Round total: \(round.totalPutts) putts")
                 .font(.subheadline)
@@ -92,7 +92,8 @@ struct ActiveRoundView: View {
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .navigationTitle(round.courseName?.isEmpty == false ? round.courseName! : "Active Round")
+        }
+        .navigationTitle(round.golfClubName.isEmpty ? "Active Round" : round.golfClubName)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
         .confirmationDialog(
@@ -119,8 +120,47 @@ struct ActiveRoundView: View {
     }
 }
 
+/// One row of the putt entry UI: a distance bin label, its current count, and +/- buttons.
+private struct PuttBinRow: View {
+    let bin: PuttBin
+    let count: Int
+    let onIncrement: () -> Void
+    let onDecrement: () -> Void
+
+    var body: some View {
+        HStack {
+            Text(bin.rawValue)
+                .font(.headline)
+                .frame(width: 90, alignment: .leading)
+
+            Spacer()
+
+            Button(action: onDecrement) {
+                Image(systemName: "minus.circle.fill")
+                    .font(.system(size: 30))
+            }
+            .disabled(count == 0)
+
+            Text("\(count)")
+                .font(.title2.bold())
+                .frame(width: 40)
+                .contentTransition(.numericText())
+
+            Button(action: onIncrement) {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 30))
+            }
+        }
+        .foregroundStyle(.primary)
+        .tint(.green)
+        .padding()
+        .background(Color(.secondarySystemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+    }
+}
+
 #Preview {
-    let round = Round(courseName: "Preview Course", numberOfHoles: 9)
+    let round = Round(golfClubName: "Preview Club", courseName: "Preview Course", numberOfHoles: 9)
     for i in 1...9 { round.holes.append(HoleScore(holeNumber: i)) }
     return NavigationStack {
         ActiveRoundView(round: round, onFinish: {})

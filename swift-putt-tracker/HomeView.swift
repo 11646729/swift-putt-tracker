@@ -69,9 +69,9 @@ struct RoundRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(round.courseName?.isEmpty == false ? round.courseName! : "Round")
+                Text(round.golfClubName.isEmpty ? "Round" : round.golfClubName)
                     .font(.headline)
-                Text(round.date.formatted(date: .abbreviated, time: .shortened))
+                Text(round.courseName.isEmpty ? round.date.formatted(date: .abbreviated, time: .omitted) : "\(round.courseName) · \(round.date.formatted(date: .abbreviated, time: .omitted))")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
