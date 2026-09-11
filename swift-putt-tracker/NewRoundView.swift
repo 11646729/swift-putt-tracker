@@ -8,7 +8,7 @@ struct NewRoundView: View {
     @State private var roundDate: Date = .now
     @State private var golfClubName: String = ""
     @State private var courseName: String = ""
-    @State private var numberOfHoles: Int = 18
+    @State private var numberOfHoles: Int = 9
     @State private var teeColour: TeeColour = .green
     @State private var weather: WeatherCondition = .sunny
     @State private var wind: WindCondition = .calm
