@@ -1,4 +1,4 @@
-# Putt Tracker — Project Plan (Draft v1)
+# Putt Tracker — Project Plan (Version 1)
 
 ## 1. Problem Statement
 Golfers want to track detailed putting stats during a round to identify patterns (e.g. missing left on downhill putts, weak lag putting from long range) and improve over time. Existing apps often bury putting stats inside full shot-tracking suites. This app focuses specifically on putts, with rich per-putt detail, without forcing full-round shot tracking.
