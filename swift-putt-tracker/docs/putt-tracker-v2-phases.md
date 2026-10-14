@@ -28,19 +28,21 @@ The phases follow a round from planning through to improvement, and run in seque
 **Status:** Not started
 
 **Objective:**
-Capture everything needed to plan the round before it is played.
+Version 2 extends Version 1 to include all shots in a round of golf. Phase 1 captures the information needed to plan the round before it is played.
 
 **Data to record:**
-- Who is playing
 - Which golf club
+- Number of Holes - 9 or 13 or 18
 - Planned tee time
 - Tee time booked? (yes / no)
+- Who is playing
 - Golfing partners informed? (yes / no)
 - Calendar updated? (yes / no)
 
 **Instructions:**
-1. [Step]
-2. [Step]
+1. Open a new data entry screen.
+2. Enter the above data in the sequence shown above.
+3. [Step]
 
 **Files affected:**
 - [File]
