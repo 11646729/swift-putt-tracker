@@ -4,8 +4,11 @@ import SwiftData
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Round.date, order: .reverse) private var rounds: [Round]
+    @Query(sort: \RoundPlan.plannedTeeTime) private var plans: [RoundPlan]
 
     @State private var showingNewRoundSheet = false
+    @State private var showingNewPlanSheet = false
+    @State private var editingPlan: RoundPlan?
 
     var body: some View {
         NavigationStack {
@@ -29,6 +32,35 @@ struct HomeView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(.horizontal)
+
+                Button {
+                    showingNewPlanSheet = true
+                } label: {
+                    Label("Plan a Round", systemImage: "calendar.badge.plus")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .buttonStyle(.bordered)
+                .padding(.horizontal)
+
+                if !plans.isEmpty {
+                    List {
+                        Section("Upcoming Plans") {
+                            ForEach(plans) { plan in
+                                Button {
+                                    editingPlan = plan
+                                } label: {
+                                    PlanRow(plan: plan)
+                                }
+                                .tint(.primary)
+                            }
+                            .onDelete(perform: deletePlans)
+                        }
+                    }
+                    .listStyle(.insetGrouped)
+                    .frame(maxHeight: 220)
+                }
 
                 if rounds.isEmpty {
                     Spacer()
@@ -59,6 +91,18 @@ struct HomeView: View {
             .sheet(isPresented: $showingNewRoundSheet) {
                 NewRoundView()
             }
+            .sheet(isPresented: $showingNewPlanSheet) {
+                RoundPlanView()
+            }
+            .sheet(item: $editingPlan) { plan in
+                RoundPlanView(existingPlan: plan)
+            }
+        }
+    }
+
+    private func deletePlans(at offsets: IndexSet) {
+        for index in offsets {
+            modelContext.delete(plans[index])
         }
     }
 }
@@ -87,7 +131,26 @@ struct RoundRow: View {
     }
 }
 
+struct PlanRow: View {
+    let plan: RoundPlan
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(plan.golfClubName.isEmpty ? "Round Plan" : plan.golfClubName)
+                    .font(.headline)
+                Text(plan.plannedTeeTime.formatted(date: .abbreviated, time: .shortened))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+            Image(systemName: plan.isReadyToPlay ? "checkmark.circle.fill" : "circle.dashed")
+                .foregroundStyle(plan.isReadyToPlay ? .green : .secondary)
+        }
+    }
+}
+
 #Preview {
     HomeView()
-        .modelContainer(for: [Round.self, HoleScore.self], inMemory: true)
+        .modelContainer(for: [Round.self, HoleScore.self, RoundPlan.self], inMemory: true)
 }

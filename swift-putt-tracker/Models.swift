@@ -146,3 +146,43 @@ final class HoleScore {
         }
     }
 }
+
+// MARK: - v2 Phase 1: Golf Round Plan
+
+/// Pre-round planning info captured before a round is played (v2 Phase 1).
+/// Intentionally separate from `Round` so this stays isolated from the v1 schema;
+/// a later phase can link a plan to the `Round` it becomes.
+@Model
+final class RoundPlan {
+    var golfClubName: String
+    var numberOfHoles: Int   // 9, 13, or 18
+    var plannedTeeTime: Date
+    var teeTimeBooked: Bool
+    var players: [String]
+    var partnersInformed: Bool
+    var calendarUpdated: Bool
+
+    init(
+        golfClubName: String,
+        numberOfHoles: Int = 9,
+        plannedTeeTime: Date = .now,
+        teeTimeBooked: Bool = false,
+        players: [String] = [],
+        partnersInformed: Bool = false,
+        calendarUpdated: Bool = false
+    ) {
+        self.golfClubName = golfClubName
+        self.numberOfHoles = numberOfHoles
+        self.plannedTeeTime = plannedTeeTime
+        self.teeTimeBooked = teeTimeBooked
+        self.players = players
+        self.partnersInformed = partnersInformed
+        self.calendarUpdated = calendarUpdated
+    }
+
+    /// Phase 1's "done when": players, club and tee time are recorded, and
+    /// booking, partner notification and calendar are all marked yes.
+    var isReadyToPlay: Bool {
+        !golfClubName.isEmpty && !players.isEmpty && teeTimeBooked && partnersInformed && calendarUpdated
+    }
+}

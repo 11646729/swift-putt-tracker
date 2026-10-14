@@ -7,6 +7,6 @@ struct PuttTrackerApp: App {
         WindowGroup {
             HomeView()
         }
-        .modelContainer(for: [Round.self, HoleScore.self])
+        .modelContainer(for: [Round.self, HoleScore.self, RoundPlan.self])
     }
 }
