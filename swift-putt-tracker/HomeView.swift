@@ -23,9 +23,9 @@ struct HomeView: View {
                 .padding(.top, 32)
 
                 Button {
-                    showingNewRoundSheet = true
+                    showingNewPlanSheet = true
                 } label: {
-                    Label("Start New Round", systemImage: "plus.circle.fill")
+                    Label("Plan a Round", systemImage: "calendar.badge.plus")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -34,9 +34,9 @@ struct HomeView: View {
                 .padding(.horizontal)
 
                 Button {
-                    showingNewPlanSheet = true
+                    showingNewRoundSheet = true
                 } label: {
-                    Label("Plan a Round", systemImage: "calendar.badge.plus")
+                    Label("Start New Round", systemImage: "plus.circle.fill")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
