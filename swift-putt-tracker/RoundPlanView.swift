@@ -12,6 +12,7 @@ struct RoundPlanView: View {
     @State private var golfClubName: String
     @State private var courseName: String
     @State private var numberOfHoles: Int
+    @State private var nineHoleSide: NineHoleSide
     @State private var plannedTeeTime: Date
     @State private var teeTimeBooked: Bool
     @State private var players: [String]
@@ -24,6 +25,7 @@ struct RoundPlanView: View {
         _golfClubName = State(initialValue: existingPlan?.golfClubName ?? "")
         _courseName = State(initialValue: existingPlan?.courseName ?? "")
         _numberOfHoles = State(initialValue: existingPlan?.numberOfHoles ?? 9)
+        _nineHoleSide = State(initialValue: existingPlan.flatMap { NineHoleSide(rawValue: $0.nineHoleSide) } ?? .front)
         _plannedTeeTime = State(initialValue: existingPlan?.plannedTeeTime ?? .now)
         _teeTimeBooked = State(initialValue: existingPlan?.teeTimeBooked ?? false)
         _players = State(initialValue: existingPlan?.players ?? [])
@@ -52,6 +54,15 @@ struct RoundPlanView: View {
                         Text("18").tag(18)
                     }
                     .pickerStyle(.segmented)
+
+                    if numberOfHoles == 9 {
+                        Picker("Nine", selection: $nineHoleSide) {
+                            ForEach(NineHoleSide.allCases) { side in
+                                Text(side.rawValue).tag(side)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
 
                     DatePicker("Planned Tee Time", selection: $plannedTeeTime)
 
@@ -110,6 +121,7 @@ struct RoundPlanView: View {
             plan.golfClubName = trimmedClubName
             plan.courseName = trimmedCourseName
             plan.numberOfHoles = numberOfHoles
+            plan.nineHoleSide = nineHoleSide.rawValue
             plan.plannedTeeTime = plannedTeeTime
             plan.teeTimeBooked = teeTimeBooked
             plan.players = players
@@ -120,6 +132,7 @@ struct RoundPlanView: View {
                 golfClubName: trimmedClubName,
                 courseName: trimmedCourseName,
                 numberOfHoles: numberOfHoles,
+                nineHoleSide: nineHoleSide,
                 plannedTeeTime: plannedTeeTime,
                 teeTimeBooked: teeTimeBooked,
                 players: players,

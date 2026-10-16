@@ -149,6 +149,14 @@ final class HoleScore {
 
 // MARK: - v2 Phase 1: Golf Round Plan
 
+/// Which half of the course is played when a plan is for 9 holes.
+enum NineHoleSide: String, CaseIterable, Identifiable {
+    case front = "Front 9"
+    case back = "Back 9"
+
+    var id: String { rawValue }
+}
+
 /// Pre-round planning info captured before a round is played (v2 Phase 1).
 /// Intentionally separate from `Round` so this stays isolated from the v1 schema;
 /// a later phase can link a plan to the `Round` it becomes.
@@ -157,6 +165,7 @@ final class RoundPlan {
     var golfClubName: String
     var courseName: String = ""   // default lets plans saved before this field existed still load
     var numberOfHoles: Int   // 9, 13, or 18
+    var nineHoleSide: String = NineHoleSide.front.rawValue   // NineHoleSide.rawValue; only meaningful when numberOfHoles == 9
     var plannedTeeTime: Date
     var teeTimeBooked: Bool
     var players: [String]
@@ -167,6 +176,7 @@ final class RoundPlan {
         golfClubName: String,
         courseName: String,
         numberOfHoles: Int = 9,
+        nineHoleSide: NineHoleSide = .front,
         plannedTeeTime: Date = .now,
         teeTimeBooked: Bool = false,
         players: [String] = [],
@@ -176,6 +186,7 @@ final class RoundPlan {
         self.golfClubName = golfClubName
         self.courseName = courseName
         self.numberOfHoles = numberOfHoles
+        self.nineHoleSide = nineHoleSide.rawValue
         self.plannedTeeTime = plannedTeeTime
         self.teeTimeBooked = teeTimeBooked
         self.players = players
