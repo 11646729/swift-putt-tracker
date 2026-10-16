@@ -10,6 +10,7 @@ struct RoundPlanView: View {
     var existingPlan: RoundPlan?
 
     @State private var golfClubName: String
+    @State private var courseName: String
     @State private var numberOfHoles: Int
     @State private var plannedTeeTime: Date
     @State private var teeTimeBooked: Bool
@@ -21,6 +22,7 @@ struct RoundPlanView: View {
     init(existingPlan: RoundPlan? = nil) {
         self.existingPlan = existingPlan
         _golfClubName = State(initialValue: existingPlan?.golfClubName ?? "")
+        _courseName = State(initialValue: existingPlan?.courseName ?? "")
         _numberOfHoles = State(initialValue: existingPlan?.numberOfHoles ?? 9)
         _plannedTeeTime = State(initialValue: existingPlan?.plannedTeeTime ?? .now)
         _teeTimeBooked = State(initialValue: existingPlan?.teeTimeBooked ?? false)
@@ -30,10 +32,11 @@ struct RoundPlanView: View {
     }
 
     private var trimmedClubName: String { golfClubName.trimmingCharacters(in: .whitespaces) }
+    private var trimmedCourseName: String { courseName.trimmingCharacters(in: .whitespaces) }
     private var trimmedPlayerName: String { newPlayerName.trimmingCharacters(in: .whitespaces) }
 
     private var canSave: Bool {
-        !trimmedClubName.isEmpty
+        !trimmedClubName.isEmpty && !trimmedCourseName.isEmpty
     }
 
     var body: some View {
@@ -41,6 +44,7 @@ struct RoundPlanView: View {
             Form {
                 Section("Round Details") {
                     TextField("Golf Club Name", text: $golfClubName)
+                    TextField("Golf Course Name", text: $courseName)
 
                     Picker("Holes", selection: $numberOfHoles) {
                         Text("9").tag(9)
@@ -83,6 +87,12 @@ struct RoundPlanView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .fontWeight(.semibold)
                     .disabled(!canSave)
+
+                    if !canSave {
+                        Text("Golf club name and course name are required.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             .navigationTitle(existingPlan == nil ? "Plan a Round" : "Edit Plan")
@@ -98,6 +108,7 @@ struct RoundPlanView: View {
     private func savePlan() {
         if let plan = existingPlan {
             plan.golfClubName = trimmedClubName
+            plan.courseName = trimmedCourseName
             plan.numberOfHoles = numberOfHoles
             plan.plannedTeeTime = plannedTeeTime
             plan.teeTimeBooked = teeTimeBooked
@@ -107,6 +118,7 @@ struct RoundPlanView: View {
         } else {
             let plan = RoundPlan(
                 golfClubName: trimmedClubName,
+                courseName: trimmedCourseName,
                 numberOfHoles: numberOfHoles,
                 plannedTeeTime: plannedTeeTime,
                 teeTimeBooked: teeTimeBooked,

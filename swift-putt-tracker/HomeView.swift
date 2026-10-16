@@ -139,7 +139,9 @@ struct PlanRow: View {
             VStack(alignment: .leading) {
                 Text(plan.golfClubName.isEmpty ? "Round Plan" : plan.golfClubName)
                     .font(.headline)
-                Text(plan.plannedTeeTime.formatted(date: .abbreviated, time: .shortened))
+                Text(plan.courseName.isEmpty
+                     ? plan.plannedTeeTime.formatted(date: .abbreviated, time: .shortened)
+                     : "\(plan.courseName) · \(plan.plannedTeeTime.formatted(date: .abbreviated, time: .shortened))")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }

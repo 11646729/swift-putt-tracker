@@ -46,7 +46,7 @@ Version 2 extends Version 1 to include all shots in a round of golf. Phase 1 cap
 3. Save the plan locally; it's not linked to an actual `Round` yet. That link is Phase 2's job, once play actually starts.
 
 **Files affected:**
-- `Models.swift` — added the `RoundPlan` model (separate from `Round`, no changes to the existing v1 schema)
+- `Models.swift` — added the `RoundPlan` model (club and course name both required) (separate from `Round`, no changes to the existing v1 schema)
 - `RoundPlanView.swift` — new screen; create or edit a plan
 - `HomeView.swift` — added a "Plan a Round" entry point and an "Upcoming Plans" list
 - `PuttTrackerApp.swift` — registered `RoundPlan` with the model container

@@ -155,6 +155,7 @@ final class HoleScore {
 @Model
 final class RoundPlan {
     var golfClubName: String
+    var courseName: String = ""   // default lets plans saved before this field existed still load
     var numberOfHoles: Int   // 9, 13, or 18
     var plannedTeeTime: Date
     var teeTimeBooked: Bool
@@ -164,6 +165,7 @@ final class RoundPlan {
 
     init(
         golfClubName: String,
+        courseName: String,
         numberOfHoles: Int = 9,
         plannedTeeTime: Date = .now,
         teeTimeBooked: Bool = false,
@@ -172,6 +174,7 @@ final class RoundPlan {
         calendarUpdated: Bool = false
     ) {
         self.golfClubName = golfClubName
+        self.courseName = courseName
         self.numberOfHoles = numberOfHoles
         self.plannedTeeTime = plannedTeeTime
         self.teeTimeBooked = teeTimeBooked
@@ -183,6 +186,6 @@ final class RoundPlan {
     /// Phase 1's "done when": players, club and tee time are recorded, and
     /// booking, partner notification and calendar are all marked yes.
     var isReadyToPlay: Bool {
-        !golfClubName.isEmpty && !players.isEmpty && teeTimeBooked && partnersInformed && calendarUpdated
+        !golfClubName.isEmpty && !courseName.isEmpty && !players.isEmpty && teeTimeBooked && partnersInformed && calendarUpdated
     }
 }
