@@ -9,6 +9,7 @@ struct HomeView: View {
     @State private var showingNewRoundSheet = false
     @State private var showingNewPlanSheet = false
     @State private var editingPlan: RoundPlan?
+    @State private var playingPlan: RoundPlan?
 
     var body: some View {
         NavigationStack {
@@ -44,16 +45,42 @@ struct HomeView: View {
                 .buttonStyle(.bordered)
                 .padding(.horizontal)
 
+                Button {
+                    playingPlan = nextPlan
+                } label: {
+                    Label("Play the Round", systemImage: "figure.golf")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .buttonStyle(.bordered)
+                .tint(.green)
+                .disabled(nextPlan == nil)
+                .padding(.horizontal)
+
                 if !plans.isEmpty {
                     List {
                         Section("Upcoming Plans") {
                             ForEach(plans) { plan in
-                                Button {
-                                    editingPlan = plan
-                                } label: {
-                                    PlanRow(plan: plan)
+                                HStack {
+                                    Button {
+                                        editingPlan = plan
+                                    } label: {
+                                        PlanRow(plan: plan)
+                                    }
+                                    .tint(.primary)
+
+                                    // Opens the Phase 2 "Playing the Round" scorecard for this plan.
+                                    Button {
+                                        playingPlan = plan
+                                    } label: {
+                                        Image(systemName: "play.circle.fill")
+                                            .font(.title2)
+                                    }
+                                    .buttonStyle(.borderless)
+                                    .tint(.green)
+                                    .accessibilityLabel("Play round")
                                 }
-                                .tint(.primary)
                             }
                             .onDelete(perform: deletePlans)
                         }
@@ -97,7 +124,15 @@ struct HomeView: View {
             .sheet(item: $editingPlan) { plan in
                 RoundPlanView(existingPlan: plan)
             }
+            .navigationDestination(item: $playingPlan) { plan in
+                PlayRoundView(plan: plan)
+            }
         }
+    }
+
+    /// The plan to play from the Home button: the one whose tee time is closest to now.
+    private var nextPlan: RoundPlan? {
+        plans.min { abs($0.plannedTeeTime.timeIntervalSinceNow) < abs($1.plannedTeeTime.timeIntervalSinceNow) }
     }
 
     private func deletePlans(at offsets: IndexSet) {

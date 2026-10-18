@@ -157,14 +157,6 @@ enum NineHoleSide: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-/// Scoring format of the competition being played.
-enum CompetitionFormat: String, CaseIterable, Identifiable {
-    case stableford = "Stableford"
-    case strokeplay = "Strokeplay"
-
-    var id: String { rawValue }
-}
-
 /// Pre-round planning info captured before a round is played (v2 Phase 1).
 /// Intentionally separate from `Round` so this stays isolated from the v1 schema;
 /// a later phase can link a plan to the `Round` it becomes.
@@ -174,19 +166,21 @@ final class RoundPlan {
     var courseName: String = ""   // default lets plans saved before this field existed still load
     var numberOfHoles: Int   // 9, 13, or 18
     var nineHoleSide: String = NineHoleSide.front.rawValue   // NineHoleSide.rawValue; only meaningful when numberOfHoles == 9
-    var competitionFormat: String = CompetitionFormat.stableford.rawValue   // CompetitionFormat.rawValue
     var plannedTeeTime: Date
     var teeTimeBooked: Bool
     var players: [String]
     var partnersInformed: Bool
     var calendarUpdated: Bool
 
+    /// The play record (v2 Phase 2) created when this plan is played. Deleted with the plan.
+    @Relationship(deleteRule: .cascade, inverse: \RoundPlay.plan)
+    var play: RoundPlay?
+
     init(
         golfClubName: String,
         courseName: String,
         numberOfHoles: Int = 9,
         nineHoleSide: NineHoleSide = .front,
-        competitionFormat: CompetitionFormat = .stableford,
         plannedTeeTime: Date = .now,
         teeTimeBooked: Bool = false,
         players: [String] = [],
@@ -197,7 +191,6 @@ final class RoundPlan {
         self.courseName = courseName
         self.numberOfHoles = numberOfHoles
         self.nineHoleSide = nineHoleSide.rawValue
-        self.competitionFormat = competitionFormat.rawValue
         self.plannedTeeTime = plannedTeeTime
         self.teeTimeBooked = teeTimeBooked
         self.players = players
@@ -205,9 +198,96 @@ final class RoundPlan {
         self.calendarUpdated = calendarUpdated
     }
 
+    /// Hole numbers to be played, following the Front 9 / Back 9 / 13 / 18 choice.
+    var holeNumbers: [Int] {
+        switch numberOfHoles {
+        case 13: return Array(1...13)
+        case 18: return Array(1...18)
+        default: return nineHoleSide == NineHoleSide.back.rawValue ? Array(10...18) : Array(1...9)
+        }
+    }
+
     /// Phase 1's "done when": players, club and tee time are recorded, and
     /// booking, partner notification and calendar are all marked yes.
     var isReadyToPlay: Bool {
         !golfClubName.isEmpty && !courseName.isEmpty && !players.isEmpty && teeTimeBooked && partnersInformed && calendarUpdated
+    }
+}
+
+// MARK: - v2 Phase 2: Playing the Round
+
+/// Scoring format of the competition being played.
+enum CompetitionFormat: String, CaseIterable, Identifiable {
+    case strokeplay = "Stroke Play"
+    case stableford = "Stableford"
+
+    var id: String { rawValue }
+}
+
+/// A round being played from a `RoundPlan` (v2 Phase 2): competition, conditions and
+/// hole-by-hole results. Separate from the v1 `Round`; linking the two is a later step.
+@Model
+final class RoundPlay {
+    var competitionFormat: String = CompetitionFormat.stableford.rawValue   // CompetitionFormat.rawValue
+    var weather: String = WeatherCondition.sunny.rawValue                   // WeatherCondition.rawValue
+    var temperature: Int = 15                                               // degrees Celsius
+    var plan: RoundPlan?
+
+    @Relationship(deleteRule: .cascade, inverse: \HolePlay.round)
+    var holes: [HolePlay] = []
+
+    init() {}
+
+    var totalPar: Int {
+        holes.map(\.par).reduce(0, +)
+    }
+
+    /// Sum of the scores entered so far.
+    var totalScore: Int {
+        holes.compactMap(\.score).reduce(0, +)
+    }
+
+    var totalPutts: Int {
+        holes.map(\.totalPutts).reduce(0, +)
+    }
+}
+
+/// One hole of a `RoundPlay`: par, score, and putts in the three v1 distance bins.
+@Model
+final class HolePlay {
+    var holeNumber: Int
+    var par: Int
+    var score: Int?       // nil until a score is entered
+    var puttsShort: Int   // 0–4 ft
+    var puttsMid: Int     // 4–10 ft
+    var puttsLong: Int    // 10+ ft
+    var round: RoundPlay?
+
+    init(holeNumber: Int, par: Int = 4) {
+        self.holeNumber = holeNumber
+        self.par = par
+        self.puttsShort = 0
+        self.puttsMid = 0
+        self.puttsLong = 0
+    }
+
+    var totalPutts: Int {
+        puttsShort + puttsMid + puttsLong
+    }
+
+    func count(for bin: PuttBin) -> Int {
+        switch bin {
+        case .short: return puttsShort
+        case .mid: return puttsMid
+        case .long: return puttsLong
+        }
+    }
+
+    func setCount(_ count: Int, for bin: PuttBin) {
+        switch bin {
+        case .short: puttsShort = max(0, count)
+        case .mid: puttsMid = max(0, count)
+        case .long: puttsLong = max(0, count)
+        }
     }
 }

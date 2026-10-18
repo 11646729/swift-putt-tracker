@@ -15,7 +15,7 @@ The phases follow a round from planning through to improvement, and run in seque
 | # | Phase | Status |
 |---|-------|--------|
 | 1 | Plan a Golf Round | Done |
-| 2 | Playing the Round | Not started |
+| 2 | Playing the Round | In progress |
 | 3 | Round Score | Not started |
 | 4 | Round & Score Analysis | Not started |
 | 5 | Competition Results | Not started |
@@ -33,9 +33,7 @@ Version 2 extends Version 1 to include all shots in a round of golf. Phase 1 cap
 **Data to record:**
 -  Name of the Golf Club - default Clandeboye
 -  Name of the Golf Course - default AVA
-- Number of Holes - 9 or 13 or 18 - default 9
-- If Number of Holes = 9 then choose either Front 9 or Back 9
-- Stableford or Strokeplay Competition - default Stableford
+- Holes - choose Front 9, Back 9, 13 or 18 - default Front 9
 - Planned tee time
 - Tee time booked? (yes / no)
 - Who is playing
@@ -64,27 +62,33 @@ Version 2 extends Version 1 to include all shots in a round of golf. Phase 1 cap
 
 ## Phase 2: Playing the Round
 
-**Status:** Not started
+**Status:** In progress
 
 **Objective:**
 Play the actual round and record the conditions.
 
 **Data to record:**
+- Stableford or Strokeplay Competition - default Stableford (moved from Phase 1)
 - Weather conditions
 - Temperature
 - Putting stats (existing v1 tracking: distance bins, putter off green, etc.)
 
 **Instructions:**
-1. [Step]
-2. [Step]
+1. From "Upcoming Plans", tap the play button on a plan to open the scorecard.
+2. Choose the competition type and record the weather and temperature.
+3. Tap a hole on the card and record its par, score and putts in each distance bin (0–4 ft, 4–10 ft, 10+ ft).
 
 **Files affected:**
-- [File]
+- `Models.swift` — added `RoundPlay` (competition, weather, temperature, holes) and `HolePlay` (par, score, putts by bin); `RoundPlan` gets a `play` relationship (deleted with the plan)
+- `PlayRoundView.swift` — new scorecard-style screen; creates the plan's `RoundPlay` on first open
+- `HomeView.swift` — play button on each plan in "Upcoming Plans"
+- `PuttTrackerApp.swift` — registered `RoundPlay` and `HolePlay` with the model container
 
 **Done when:**
 - Round is played and conditions are recorded
 
 **Notes:**
+- Not yet done: marking a round as finished, the "putter off green" flag, and linking a `RoundPlay` to the v1 `Round`/history. Net scores, handicap and Stableford points are Phase 3 territory.
 
 ---
 
@@ -189,3 +193,5 @@ Plan how to improve by practising specific shots, based on the analysis.
 - 2026-10-11: Expanded from 4 to 6 phases; added phase names and data fields
 - 2026-10-14: Phase 1 implemented (RoundPlan model + RoundPlanView + Home entry point); status set to Done
 - 2026-10-18: Phase 1 updated for Stableford/Strokeplay competition format (default Stableford)
+- 2026-10-18: Phase 1 Holes is now a single choice (Front 9 / Back 9 / 13 / 18); Competition type moved to Phase 2
+- 2026-10-18: Phase 2 started: RoundPlay/HolePlay models, PlayRoundView scorecard, play button on plans
