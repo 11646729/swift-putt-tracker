@@ -157,6 +157,14 @@ enum NineHoleSide: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+/// Scoring format of the competition being played.
+enum CompetitionFormat: String, CaseIterable, Identifiable {
+    case stableford = "Stableford"
+    case strokeplay = "Strokeplay"
+
+    var id: String { rawValue }
+}
+
 /// Pre-round planning info captured before a round is played (v2 Phase 1).
 /// Intentionally separate from `Round` so this stays isolated from the v1 schema;
 /// a later phase can link a plan to the `Round` it becomes.
@@ -166,6 +174,7 @@ final class RoundPlan {
     var courseName: String = ""   // default lets plans saved before this field existed still load
     var numberOfHoles: Int   // 9, 13, or 18
     var nineHoleSide: String = NineHoleSide.front.rawValue   // NineHoleSide.rawValue; only meaningful when numberOfHoles == 9
+    var competitionFormat: String = CompetitionFormat.stableford.rawValue   // CompetitionFormat.rawValue
     var plannedTeeTime: Date
     var teeTimeBooked: Bool
     var players: [String]
@@ -177,6 +186,7 @@ final class RoundPlan {
         courseName: String,
         numberOfHoles: Int = 9,
         nineHoleSide: NineHoleSide = .front,
+        competitionFormat: CompetitionFormat = .stableford,
         plannedTeeTime: Date = .now,
         teeTimeBooked: Bool = false,
         players: [String] = [],
@@ -187,6 +197,7 @@ final class RoundPlan {
         self.courseName = courseName
         self.numberOfHoles = numberOfHoles
         self.nineHoleSide = nineHoleSide.rawValue
+        self.competitionFormat = competitionFormat.rawValue
         self.plannedTeeTime = plannedTeeTime
         self.teeTimeBooked = teeTimeBooked
         self.players = players

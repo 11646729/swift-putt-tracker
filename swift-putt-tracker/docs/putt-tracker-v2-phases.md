@@ -14,7 +14,7 @@ The phases follow a round from planning through to improvement, and run in seque
 
 | # | Phase | Status |
 |---|-------|--------|
-| 1 | Golf Round Plan | Done |
+| 1 | Plan a Golf Round | Done |
 | 2 | Playing the Round | Not started |
 | 3 | Round Score | Not started |
 | 4 | Round & Score Analysis | Not started |
@@ -31,9 +31,11 @@ The phases follow a round from planning through to improvement, and run in seque
 Version 2 extends Version 1 to include all shots in a round of golf. Phase 1 captures the information needed to plan the round before it is played.
 
 **Data to record:**
-- Which golf club
-- Which golf course
-- Number of Holes - 9 or 13 or 18
+-  Name of the Golf Club - default Clandeboye
+-  Name of the Golf Course - default AVA
+- Number of Holes - 9 or 13 or 18 - default 9
+- If Number of Holes = 9 then choose either Front 9 or Back 9
+- Stableford or Strokeplay Competition - default Stableford
 - Planned tee time
 - Tee time booked? (yes / no)
 - Who is playing
@@ -186,3 +188,4 @@ Plan how to improve by practising specific shots, based on the analysis.
 - 2026-10-11: Document created with phase skeleton
 - 2026-10-11: Expanded from 4 to 6 phases; added phase names and data fields
 - 2026-10-14: Phase 1 implemented (RoundPlan model + RoundPlanView + Home entry point); status set to Done
+- 2026-10-18: Phase 1 updated for Stableford/Strokeplay competition format (default Stableford)

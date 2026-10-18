@@ -13,6 +13,7 @@ struct RoundPlanView: View {
     @State private var courseName: String
     @State private var numberOfHoles: Int
     @State private var nineHoleSide: NineHoleSide
+    @State private var competitionFormat: CompetitionFormat
     @State private var plannedTeeTime: Date
     @State private var teeTimeBooked: Bool
     @State private var players: [String]
@@ -22,10 +23,11 @@ struct RoundPlanView: View {
 
     init(existingPlan: RoundPlan? = nil) {
         self.existingPlan = existingPlan
-        _golfClubName = State(initialValue: existingPlan?.golfClubName ?? "")
-        _courseName = State(initialValue: existingPlan?.courseName ?? "")
+        _golfClubName = State(initialValue: existingPlan?.golfClubName ?? "Clandeboye")
+        _courseName = State(initialValue: existingPlan?.courseName ?? "AVA")
         _numberOfHoles = State(initialValue: existingPlan?.numberOfHoles ?? 9)
         _nineHoleSide = State(initialValue: existingPlan.flatMap { NineHoleSide(rawValue: $0.nineHoleSide) } ?? .front)
+        _competitionFormat = State(initialValue: existingPlan.flatMap { CompetitionFormat(rawValue: $0.competitionFormat) } ?? .stableford)
         _plannedTeeTime = State(initialValue: existingPlan?.plannedTeeTime ?? .now)
         _teeTimeBooked = State(initialValue: existingPlan?.teeTimeBooked ?? false)
         _players = State(initialValue: existingPlan?.players ?? [])
@@ -63,6 +65,13 @@ struct RoundPlanView: View {
                         }
                         .pickerStyle(.segmented)
                     }
+
+                    Picker("Competition", selection: $competitionFormat) {
+                        ForEach(CompetitionFormat.allCases) { format in
+                            Text(format.rawValue).tag(format)
+                        }
+                    }
+                    .pickerStyle(.segmented)
 
                     DatePicker("Planned Tee Time", selection: $plannedTeeTime)
 
@@ -122,6 +131,7 @@ struct RoundPlanView: View {
             plan.courseName = trimmedCourseName
             plan.numberOfHoles = numberOfHoles
             plan.nineHoleSide = nineHoleSide.rawValue
+            plan.competitionFormat = competitionFormat.rawValue
             plan.plannedTeeTime = plannedTeeTime
             plan.teeTimeBooked = teeTimeBooked
             plan.players = players
@@ -133,6 +143,7 @@ struct RoundPlanView: View {
                 courseName: trimmedCourseName,
                 numberOfHoles: numberOfHoles,
                 nineHoleSide: nineHoleSide,
+                competitionFormat: competitionFormat,
                 plannedTeeTime: plannedTeeTime,
                 teeTimeBooked: teeTimeBooked,
                 players: players,
