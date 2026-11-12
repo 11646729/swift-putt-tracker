@@ -1,0 +1,60 @@
+{
+  "id": "a3f1c920-8e44-4b2d-bf63-1d7e9a0c5521",
+  "name": "Harbour Pines Golf Club",
+  "slug": "harbour-pines-golf-club",
+  "location": {
+    "city": "Gosford",
+    "state": "NSW",
+    "country": "AU",
+    "lat": -33.4172,
+    "lng": 151.3526
+  },
+  "timezone": "Australia/Sydney",
+  "par": 72,
+  "rating": 73.2,
+  "slope": 137,
+  "holes": [
+    {
+      "number": 1,
+      "par": 4,
+      "handicap": 11,
+      "tees": [
+        { "name": "Black", "distance_yards": 412 },
+        { "name": "Blue",  "distance_yards": 391 },
+        { "name": "White", "distance_yards": 368 },
+        { "name": "Red",   "distance_yards": 312 }
+      ],
+      "pin_positions": [
+        { "id": "front",  "distance_from_front_yards": 6  },
+        { "id": "middle", "distance_from_front_yards": 17 },
+        { "id": "back",   "distance_from_front_yards": 29 }
+      ],
+      "hazards": [
+        {
+          "type": "bunker",
+          "side": "left",
+          "distance_from_tee_yards": 230,
+          "notes": "Fairway bunker, steep face"
+        },
+        {
+          "type": "water",
+          "side": "right",
+          "distance_from_tee_yards": 195,
+          "notes": "Lateral hazard runs entire right side"
+        }
+      ],
+      "layup_targets": [
+        {
+          "label": "Layup short of bunker",
+          "distance_from_tee_yards": 210
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "contributed_by": "opensourcegolf",
+    "last_updated": "2026-02-22",
+    "version": "1.0.0",
+    "license": "CC BY 4.0"
+  }
+}
