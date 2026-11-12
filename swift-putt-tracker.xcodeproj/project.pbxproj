@@ -66,6 +66,16 @@
 			isa = PBXGroup;
 			children = (
 				477DA4CD30A5DACF00DEC485 /* docs */,
+				477DA4AB30A5D87300DEC485 /* ActiveRoundView.swift */,
+				477DA4AC30A5D87300DEC485 /* Assets.xcassets */,
+				477DA4AD30A5D87300DEC485 /* HistoryView.swift */,
+				477DA4AE30A5D87300DEC485 /* HomeView.swift */,
+				477DA4AF30A5D87300DEC485 /* Models.swift */,
+				477DA4B030A5D87300DEC485 /* NewRoundView.swift */,
+				477DA4B130A5D87300DEC485 /* PlayRoundView.swift */,
+				477DA4B230A5D87300DEC485 /* PuttTrackerApp.swift */,
+				477DA4B330A5D87300DEC485 /* RoundPlanView.swift */,
+				477DA4B430A5D87300DEC485 /* RoundSummaryView.swift */,
 			);
 			path = "new-swift-putt-tracker";
 			sourceTree = "<group>";
@@ -81,16 +91,6 @@
 				477DA4A730A5D87300DEC485 /* OpenSourceGolf.json */,
 				477DA4A830A5D87300DEC485 /* putt-tracker-plan.md */,
 				477DA4A930A5D87300DEC485 /* putt-tracker-v2-phases.md */,
-				477DA4AB30A5D87300DEC485 /* ActiveRoundView.swift */,
-				477DA4AC30A5D87300DEC485 /* Assets.xcassets */,
-				477DA4AD30A5D87300DEC485 /* HistoryView.swift */,
-				477DA4AE30A5D87300DEC485 /* HomeView.swift */,
-				477DA4AF30A5D87300DEC485 /* Models.swift */,
-				477DA4B030A5D87300DEC485 /* NewRoundView.swift */,
-				477DA4B130A5D87300DEC485 /* PlayRoundView.swift */,
-				477DA4B230A5D87300DEC485 /* PuttTrackerApp.swift */,
-				477DA4B330A5D87300DEC485 /* RoundPlanView.swift */,
-				477DA4B430A5D87300DEC485 /* RoundSummaryView.swift */,
 			);
 			path = docs;
 			sourceTree = "<group>";
