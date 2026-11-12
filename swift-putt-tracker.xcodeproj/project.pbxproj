@@ -26,6 +26,8 @@
 		477DA4C530A5D87300DEC485 /* RoundSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477DA4B430A5D87300DEC485 /* RoundSummaryView.swift */; };
 		47A654B2306673B200F41F32 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 47A654B1306673B200F41F32 /* README.md */; };
 		47DB322730A5C2440073CFE1 /* clandeboye-schema.sql in Resources */ = {isa = PBXBuildFile; fileRef = 47DB322630A5C2440073CFE1 /* clandeboye-schema.sql */; };
+		47E46F7430A684E20015AA10 /* GolfClubData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E46F7330A684E20015AA10 /* GolfClubData.swift */; };
+		47E46F7630A684EE0015AA10 /* GolfClubLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E46F7530A684EE0015AA10 /* GolfClubLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		4798411E3050A2B400A5A21C /* swift-putt-tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swift-putt-tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47A654B1306673B200F41F32 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		47DB322630A5C2440073CFE1 /* clandeboye-schema.sql */ = {isa = PBXFileReference; lastKnownFileType = text; path = "clandeboye-schema.sql"; sourceTree = "<group>"; };
+		47E46F7330A684E20015AA10 /* GolfClubData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfClubData.swift; sourceTree = "<group>"; };
+		47E46F7530A684EE0015AA10 /* GolfClubLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfClubLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 				477DA4B330A5D87300DEC485 /* RoundPlanView.swift */,
 				477DA4B430A5D87300DEC485 /* RoundSummaryView.swift */,
 				47A654B1306673B200F41F32 /* README.md */,
+				47E46F7330A684E20015AA10 /* GolfClubData.swift */,
+				47E46F7530A684EE0015AA10 /* GolfClubLoader.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -198,10 +204,12 @@
 				477DA4BF30A5D87300DEC485 /* HomeView.swift in Sources */,
 				477DA4C030A5D87300DEC485 /* Models.swift in Sources */,
 				477DA4C130A5D87300DEC485 /* NewRoundView.swift in Sources */,
+				47E46F7430A684E20015AA10 /* GolfClubData.swift in Sources */,
 				477DA4C230A5D87300DEC485 /* PlayRoundView.swift in Sources */,
 				477DA4C330A5D87300DEC485 /* PuttTrackerApp.swift in Sources */,
 				477DA4C430A5D87300DEC485 /* RoundPlanView.swift in Sources */,
 				477DA4C530A5D87300DEC485 /* RoundSummaryView.swift in Sources */,
+				47E46F7630A684EE0015AA10 /* GolfClubLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
