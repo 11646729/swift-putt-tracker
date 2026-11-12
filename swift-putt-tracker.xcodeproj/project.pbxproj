@@ -62,24 +62,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		477DA4CC30A5DAB600DEC485 /* new-swift-putt-tracker */ = {
-			isa = PBXGroup;
-			children = (
-				477DA4CD30A5DACF00DEC485 /* docs */,
-				477DA4AB30A5D87300DEC485 /* ActiveRoundView.swift */,
-				477DA4AC30A5D87300DEC485 /* Assets.xcassets */,
-				477DA4AD30A5D87300DEC485 /* HistoryView.swift */,
-				477DA4AE30A5D87300DEC485 /* HomeView.swift */,
-				477DA4AF30A5D87300DEC485 /* Models.swift */,
-				477DA4B030A5D87300DEC485 /* NewRoundView.swift */,
-				477DA4B130A5D87300DEC485 /* PlayRoundView.swift */,
-				477DA4B230A5D87300DEC485 /* PuttTrackerApp.swift */,
-				477DA4B330A5D87300DEC485 /* RoundPlanView.swift */,
-				477DA4B430A5D87300DEC485 /* RoundSummaryView.swift */,
-			);
-			path = "new-swift-putt-tracker";
-			sourceTree = "<group>";
-		};
 		477DA4CD30A5DACF00DEC485 /* docs */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,9 +88,19 @@
 		479841153050A2B400A5A21C = {
 			isa = PBXGroup;
 			children = (
-				477DA4CC30A5DAB600DEC485 /* new-swift-putt-tracker */,
-				47A654B1306673B200F41F32 /* README.md */,
 				4798411F3050A2B400A5A21C /* Products */,
+				477DA4CD30A5DACF00DEC485 /* docs */,
+				477DA4AB30A5D87300DEC485 /* ActiveRoundView.swift */,
+				477DA4AC30A5D87300DEC485 /* Assets.xcassets */,
+				477DA4AD30A5D87300DEC485 /* HistoryView.swift */,
+				477DA4AE30A5D87300DEC485 /* HomeView.swift */,
+				477DA4AF30A5D87300DEC485 /* Models.swift */,
+				477DA4B030A5D87300DEC485 /* NewRoundView.swift */,
+				477DA4B130A5D87300DEC485 /* PlayRoundView.swift */,
+				477DA4B230A5D87300DEC485 /* PuttTrackerApp.swift */,
+				477DA4B330A5D87300DEC485 /* RoundPlanView.swift */,
+				477DA4B430A5D87300DEC485 /* RoundSummaryView.swift */,
+				47A654B1306673B200F41F32 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
