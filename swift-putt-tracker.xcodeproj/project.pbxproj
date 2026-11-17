@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4739858830AC5B7C00483997 /* session-summary-postgres-schema-updates.md in Resources */ = {isa = PBXBuildFile; fileRef = 4739858730AC5B7C00483997 /* session-summary-postgres-schema-updates.md */; };
 		477DA4B530A5D87300DEC485 /* clandeboyeGolfClub.json in Resources */ = {isa = PBXBuildFile; fileRef = 477DA4A230A5D87300DEC485 /* clandeboyeGolfClub.json */; };
 		477DA4B630A5D87300DEC485 /* clandeboye-postgres-schema.md in Resources */ = {isa = PBXBuildFile; fileRef = 477DA4A430A5D87300DEC485 /* clandeboye-postgres-schema.md */; };
 		477DA4B730A5D87300DEC485 /* CLAUDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 477DA4A530A5D87300DEC485 /* CLAUDE.md */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4739858730AC5B7C00483997 /* session-summary-postgres-schema-updates.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "session-summary-postgres-schema-updates.md"; sourceTree = "<group>"; };
 		477DA4A230A5D87300DEC485 /* clandeboyeGolfClub.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = clandeboyeGolfClub.json; sourceTree = "<group>"; };
 		477DA4A430A5D87300DEC485 /* clandeboye-postgres-schema.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "clandeboye-postgres-schema.md"; sourceTree = "<group>"; };
 		477DA4A530A5D87300DEC485 /* CLAUDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CLAUDE.md; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				477DA4A730A5D87300DEC485 /* OpenSourceGolf.json */,
 				477DA4A830A5D87300DEC485 /* putt-tracker-plan.md */,
 				477DA4A930A5D87300DEC485 /* putt-tracker-v2-phases.md */,
+				4739858730AC5B7C00483997 /* session-summary-postgres-schema-updates.md */,
 			);
 			path = docs;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				477DA4BC30A5D87300DEC485 /* Assets.xcassets in Resources */,
 				47DB322730A5C2440073CFE1 /* clandeboye-schema.sql in Resources */,
 				47A654B2306673B200F41F32 /* README.md in Resources */,
+				4739858830AC5B7C00483997 /* session-summary-postgres-schema-updates.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
